@@ -7,6 +7,6 @@ describe('Locations controller', () => {
       return request(app).get('/locations').then((res) => {
         expect(res.statusCode).toBe(200)
       })
-    });
-  });
-});
+    })
+  })
+})

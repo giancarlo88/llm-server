@@ -1,0 +1,15 @@
+
+GET http://localhost:8888/locations
+###
+
+GET http://localhost:8888/locations/36
+###
+POST http://localhost:8888/locations
+Content-Type:application/json
+
+{
+  "xCord": 22,
+  "yCord": 22,
+  "title": "test test test2",
+  "info": "test test test2"
+}
