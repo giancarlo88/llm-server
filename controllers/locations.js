@@ -2,12 +2,12 @@ const express = require('express')
 const router = express.Router()
 
 const mongoose = require('mongoose')
-const connection = mongoose.createConnection(`${process.env.MONGO_URL}/${process.env.DB_NAME}`)
+const connection = mongoose.createConnection(`${process.env.MONGO_URL}`)
 
 const Location = require('../models/Location')(connection)
 
 router.get('/', (req, res) => {
-  Location.find()
+  Location.find({})
     .then((data) => {
       res.send(data)
     })

@@ -9,7 +9,7 @@ module.exports = (connection) => {
     title: String,
     info: String
   })
-  const connectionModel = connection.model('Location', LocationSchema, 'map')
+  const connectionModel = connection.model('Location', LocationSchema, process.env.COLLECTION_NAME)
 
   LocationSchema.pre('save', function (next) {
     if (this.isNew) {
