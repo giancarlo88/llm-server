@@ -1,10 +1,10 @@
 
-GET http://localhost:8888/locations
+GET http://localhost:8081/locations
 ###
 
-GET http://localhost:8888/locations/36
+GET http://localhost:8081/locations/36
 ###
-POST http://localhost:8888/locations
+POST http://localhost:8081/locations
 Content-Type:application/json
 
 {
@@ -13,3 +13,30 @@ Content-Type:application/json
   "title": "test test test2",
   "info": "test test test2"
 }
+
+###
+
+POST http://localhost:8081/users
+Content-Type:application/json
+
+{
+  "email": "gcgp88test1@gmail.com",
+  "username": "gcgp88test2",
+  "password": "asdf1234",
+  "passwordConfirm": "asdf1234"
+}
+
+###
+
+POST http://localhost:8081/auth
+Content-Type:application/json
+
+{
+  "username": "gcgp88test2",
+  "password": "asdf1234"
+}
+
+###
+
+DELETE http://localhost:8081/auth
+Content-Type:application/json
