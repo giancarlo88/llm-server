@@ -1,4 +1,5 @@
 const express = require('express')
+const session = require('express-session')
 const bodyParser = require('body-parser')
 
 var allowCrossDomain = function (req, res, next) {
@@ -12,6 +13,11 @@ var allowCrossDomain = function (req, res, next) {
 const app = express()
 app.use(bodyParser.json())
 app.use(allowCrossDomain)
+app.use(session({
+  secret: 'Hello', 
+  resave: true, 
+  saveUninitialized: false
+}))
 
 const controllers = require('./controllers')
 

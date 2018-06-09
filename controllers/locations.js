@@ -7,6 +7,7 @@ const connection = mongoose.createConnection(`${process.env.MONGO_URL}`)
 const Location = require('../models/Location')(connection)
 
 router.get('/', (req, res) => {
+  console.log(req.session.userId)
   Location.find({})
     .then((data) => {
       res.send(data)

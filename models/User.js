@@ -36,6 +36,22 @@ module.exports = connection => {
     })
   })
 
+  UserSchema.statics.authenticate = function(username, password){
+    return new Promise((resolve, reject) => {
+      const errMessage = 'Invalid user credentials'
+      return this.model('User').findOne({ username }).exec((err, user) => {
+        console.log(user)
+        if (err) return reject(errMessage)
+        else if (!user) {
+          return reject('Invalid user credentials')
+        }
+        return bcrypt.compare(password, user.password, (err, result) => {
+          return result ? resolve(user) : reject(errMessage)
+        })
+      })
+    })
+  }
+
   const userModel = connection.model('User', UserSchema, 'users')
   return userModel
 }
