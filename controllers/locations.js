@@ -6,40 +6,55 @@ const connection = mongoose.createConnection(`${process.env.MONGO_URL}`)
 
 const Location = require('../models/Location')(connection)
 
+const checkAuthentication = require('../middleware/checkAuthentication')
+
 router.get('/', (req, res) => {
   console.log(req.session.userId)
   Location.find({})
-    .then((data) => {
+    .then(data => {
       res.send(data)
     })
-    .catch((err) => res.status(422).send('There was an error', err))
+    .catch(err => res.status(422).send('There was an error', err))
 })
 
 router.get('/:index', (req, res) => {
   const index = req.params.index
   Location.find({ index })
-    .then((data) => {
-      if (!data.length) return res.status(404).send('No location with that index.')
+    .then(data => {
+      if (!data.length)
+        return res.status(404).send('No location with that index.')
       return res.send(data)
     })
-    .catch((err) => res.status(404).send(err))
+    .catch(err => res.status(404).send(err))
 })
 
-router.post('/', (req, res) => {
-  const { xCord, yCord, title, info } = req.body
-  Location.create({
-    'x-cord': xCord,
-    'y-cord': yCord,
-    title,
-    info
-  })
-    .then((data) => {
-      res.send({
-        msg: 'Location successfully added to database',
-        index: data.index
+router.post(
+  '/',
+  (req, res, next) => {
+    checkAuthentication(req)
+      .then(req => {
+        next()
       })
+      .catch(err => {
+        res.status(401).send('Must be logged in to perform this action')
+      })
+  },
+  (req, res) => {
+    const { xCord, yCord, title, info } = req.body
+    Location.create({
+      'x-cord': xCord,
+      'y-cord': yCord,
+      title,
+      info
     })
-    .catch((err) => res.status(422).send('Error uploading to database', err))
-})
+      .then(data => {
+        res.send({
+          msg: 'Location successfully added to database',
+          index: data.index
+        })
+      })
+      .catch(err => res.status(422).send('Error uploading to database', err))
+  }
+)
 
 module.exports = router

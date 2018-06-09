@@ -14,7 +14,6 @@ module.exports = (connection) => {
   LocationSchema.pre('save', function (next) {
     if (this.isNew) {
       connectionModel.count().then((res) => {
-        console.log(res)
         this.index = res
         next()
       })
