@@ -1,7 +1,7 @@
 module.exports = (connection) => {
   const mongoose = require('mongoose')
   const LocationSchema = new mongoose.Schema({
-    index: String,
+    index: Number,
     'x-cord': Number,
     'y-cord': Number,
     mapkey: Number,
