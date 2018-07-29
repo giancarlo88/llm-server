@@ -40,7 +40,6 @@ module.exports = connection => {
     return new Promise((resolve, reject) => {
       const errMessage = 'Invalid user credentials'
       return this.model('User').findOne({ username }).exec((err, user) => {
-        console.log(user)
         if (err) return reject(errMessage)
         else if (!user) {
           return reject('Invalid user credentials')

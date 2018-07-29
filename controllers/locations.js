@@ -9,7 +9,6 @@ const Location = require('../models/Location')(connection)
 const checkAuthentication = require('../middleware/checkAuthentication')
 
 router.get('/', (req, res) => {
-  console.log(req.session.userId)
   Location.find({})
     .then(data => {
       res.send(data)

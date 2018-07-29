@@ -1,18 +1,19 @@
 const express = require('express')
 const session = require('express-session')
 const bodyParser = require('body-parser')
+const cors = require('cors')
+const morgan = require('morgan')
 
-var allowCrossDomain = function (req, res, next) {
-  res.header('Access-Control-Allow-Origin', `${process.env.HOST}`)
-  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS')
-  res.header('Access-Control-Allow-Headers', 'Content-Type')
 
-  next()
+const corsConfig = { 
+  origin: process.env.HOST
 }
 
 const app = express()
+app.options('*', cors(corsConfig))
+app.use(morgan('dev'))
+app.use(cors(corsConfig))
 app.use(bodyParser.json())
-app.use(allowCrossDomain)
 app.use(session({
   secret: 'Hello', 
   resave: true, 
