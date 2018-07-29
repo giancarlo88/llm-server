@@ -6,7 +6,8 @@ const morgan = require('morgan')
 
 
 const corsConfig = { 
-  origin: process.env.HOST
+  origin: process.env.HOST, 
+  credentials: true
 }
 
 const app = express()
@@ -19,8 +20,8 @@ app.use(session({
   resave: true, 
   saveUninitialized: false,
   cookie: {
-    maxAge: 30 * 24 * 60 * 60 * 100, 
-    domain: process.env.HOST
+    maxAge: 30 * 24 * 60 * 60 * 100,
+    httpOnly: false
   }
 }))
 
