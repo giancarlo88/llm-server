@@ -9,9 +9,13 @@ const User = require('../models/User')(connection)
 router.post('/', (req, res) => {
   const { username, password } = req.body
   return User.authenticate(username, password)
-    .then(body => {
-      req.session.userId = body._id
-      return res.status(200).send(body)
+    .then(({ _id: id }) => {
+      req.session.userId = id
+      req.session.save()
+      return res.status(200).send({
+        authenticated: true,
+        id
+      })
     })
     .catch(err => res.status(401).send(err))
 })

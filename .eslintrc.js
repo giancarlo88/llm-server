@@ -5,6 +5,6 @@ module.exports = {
     jest: true
   },
   rules: {
-    'space-before-function-paren': 'never'
+    'space-before-function-paren': 0
   }
 }
