@@ -14,10 +14,15 @@ router.post('/', (req, res) => {
       req.session.save()
       return res.status(200).send({
         authenticated: true,
+        message: 'Successfully logged in.',
         id
       })
     })
-    .catch(err => res.status(401).send(err))
+    .catch(error => res.status(401).send({
+      authenticated: false, 
+      message: 'Invalid user credentials',
+      error
+    }))
 })
 
 router.delete('/', (req, res) => {
